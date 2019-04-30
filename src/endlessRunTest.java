@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,15 +12,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import logic.gameObject;
 
 public class endlessRunTest extends Application {
 	
 	List<gameObject> goList;
 	Random rd;
 	gameObject player;
-	Label overlapLabel;
+	HBox infoBox;
+	Label overlapLabel, goCountLabel;
 	
 	static double SPEED = -3, SCREEN_WIDTH = 500, SCREEN_HEIGHT = 500;
 	
@@ -28,12 +32,16 @@ public class endlessRunTest extends Application {
 		goList = new ArrayList<gameObject>();
 		rd = new Random();
 		StackPane root = new StackPane();
-		overlapLabel = new Label("overlap:");
-		BorderPane info = new BorderPane(overlapLabel);
-		BorderPane.setAlignment(overlapLabel, Pos.TOP_CENTER);
+		infoBox = new HBox();
+		overlapLabel = new Label();
+		goCountLabel = new Label();
+		infoBox.getChildren().addAll(overlapLabel,goCountLabel);
+		infoBox.setAlignment(Pos.TOP_CENTER);
+		infoBox.setPadding(new Insets(15));
+		infoBox.setSpacing(15);
 		Canvas canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		root.getChildren().addAll(canvas,info);
+		root.getChildren().addAll(canvas,infoBox);
 		generatePlayer();
 		Scene scene = new Scene(root);
 		loop(gc);
@@ -52,8 +60,10 @@ public class endlessRunTest extends Application {
 					generateGameObject();
 					// re Timer
 					time = 0;
-					//time_mod = 10000;
+					//normal time_mod;
 					time_mod = (int) (rd.nextDouble() * 50) + 40;
+					//test time_mod
+					time_mod = (int) (rd.nextDouble() * 28) + 2;
 				}
 				updatePos();
 				updateGraphic(gc);
@@ -62,8 +72,17 @@ public class endlessRunTest extends Application {
 	}
 	
 	public void updatePos() {
+		List<gameObject> removeList = new ArrayList<gameObject>();
 		for(gameObject e: goList) {
 			e.x += SPEED;
+			if(isDestroy(e)) {
+				removeList.add(e);
+			}
+		}
+		for(gameObject e: removeList) {
+			if(goList.contains(e)) {
+				goList.remove(e);
+			}
 		}
 	}
 	
@@ -78,6 +97,7 @@ public class endlessRunTest extends Application {
 		}
 		gc.drawImage(player, player.x, player.y);
 		overlapLabel.setText("overlap:"+overlapCount);
+		goCountLabel.setText("gameObject count:" + goList.size());
 	}
 	
 	public void generateGameObject() {
@@ -101,39 +121,13 @@ public class endlessRunTest extends Application {
 		return isOverlapX && isOverlapY;
 	}
 	
+	public boolean isDestroy(gameObject o) {
+		if(o.x < 0 - o.w)	return true;
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-}
-
-class gameObject extends Image {
-
-	public double x,y,w,h;
-	
-	public gameObject(String url) {
-		super(url);
-		this.x = 0;
-		this.y = 0;
-		this.w = 50;
-		this.h = 50;
-	}
-	
-	public gameObject(String url, double x, double y) {
-		super(url);
-		this.x = x;
-		this.y = y;
-		this.w = 50;
-		this.h = 50;
-	}
-
-	public gameObject(String url, double x, double y, double w, double h) {
-		super(url);
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-	
 
 }
