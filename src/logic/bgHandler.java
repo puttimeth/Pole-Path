@@ -38,16 +38,16 @@ public class bgHandler implements Renderable {
 	}
 	
 	public void generateInitialBG() {
-		for(int i=0;i<3;i++) {
-			String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(3)+1)+".jpg").toString();
+		for(int i=0;i<2;i++) {
+			String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(4)+1)+".png").toString();
 			gameObject bg = new gameObject(url, i * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
 			bgEntities.add(bg);
 		}
 	}
 	
 	public void generateBG() {
-		String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(3)+1)+".jpg").toString();
-		gameObject bg = new gameObject(url, 2 * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
+		String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(4)+1)+".png").toString();
+		gameObject bg = new gameObject(url, 1 * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
 		bgEntities.add(bg);
 	}
 	

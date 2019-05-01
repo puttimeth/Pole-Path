@@ -21,7 +21,7 @@ import render.render;
 
 public class mainTest extends Application {
 	
-	public static final double SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 500;
+	public static final double SCREEN_WIDTH = 500, SCREEN_HEIGHT = 250;
 	public static double SPEED = -3;
 	
 	List<gameObject> bgList;
