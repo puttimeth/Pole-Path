@@ -15,17 +15,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import logic.bgHandler;
-import logic.gameObject;
+import logic.BGHandler;
+import logic.GameObject;
 import render.render;
 
 public class mainTest extends Application {
 	
-	public static final double SCREEN_WIDTH = 500, SCREEN_HEIGHT = 250;
+	public static final double SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 500;
 	public static double SPEED = -3;
 	
-	List<gameObject> bgList;
-	bgHandler bgHandle;
+	List<GameObject> bgList;
+	BGHandler bgHandle;
 	render rend;
 	Label bgLabel;
 	
@@ -48,11 +48,11 @@ public class mainTest extends Application {
 	}
 	
 	public void initializeList() {
-		bgList = new ArrayList<gameObject>();
+		bgList = new ArrayList<GameObject>();
 	}
 	
 	public void setUp(GraphicsContext gc) {		
-		bgHandle = new bgHandler();
+		bgHandle = new BGHandler();
 		rend = new render();
 		bgHandle.generateInitialBG();
 	}
@@ -63,7 +63,7 @@ public class mainTest extends Application {
 			@Override
 			public void handle(long arg0) {
 				// bgLabel update
-				bgLabel.setText("bgEntitiesCount:"+bgHandler.bgEntities.size());
+				bgLabel.setText("bgEntitiesCount:"+BGHandler.bgEntities.size());
 				/*if(timer % 500 == 0) {
 					bgHandle.generateBG();
 				}*/

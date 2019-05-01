@@ -15,13 +15,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import logic.gameObject;
+import logic.GameObject;
 
 public class endlessRunTest extends Application {
 	
-	List<gameObject> goList;
+	List<GameObject> goList;
 	Random rd;
-	gameObject player;
+	GameObject player;
 	HBox infoBox;
 	Label overlapLabel, goCountLabel;
 	
@@ -29,7 +29,7 @@ public class endlessRunTest extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		goList = new ArrayList<gameObject>();
+		goList = new ArrayList<GameObject>();
 		rd = new Random();
 		StackPane root = new StackPane();
 		infoBox = new HBox();
@@ -72,14 +72,14 @@ public class endlessRunTest extends Application {
 	}
 	
 	public void updatePos() {
-		List<gameObject> removeList = new ArrayList<gameObject>();
-		for(gameObject e: goList) {
+		List<GameObject> removeList = new ArrayList<GameObject>();
+		for(GameObject e: goList) {
 			e.x += SPEED;
 			if(isDestroy(e)) {
 				removeList.add(e);
 			}
 		}
-		for(gameObject e: removeList) {
+		for(GameObject e: removeList) {
 			if(goList.contains(e)) {
 				goList.remove(e);
 			}
@@ -89,7 +89,7 @@ public class endlessRunTest extends Application {
 	public void updateGraphic(GraphicsContext gc) {
 		int overlapCount = 0;
 		gc.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		for(gameObject e : goList) {
+		for(GameObject e : goList) {
 			gc.drawImage(e, e.x, e.y);
 			if(isCollide(e, player))	{
 				overlapCount++;
@@ -104,15 +104,15 @@ public class endlessRunTest extends Application {
 		String name[] = {"red.png","green.png","blue.png"};
 		int index = rd.nextInt(name.length);
 		String url = ClassLoader.getSystemResource(name[index]).toString();
-		gameObject go = new gameObject(url,500,rd.nextDouble() * 300 + 100,50,50);
+		GameObject go = new GameObject(url,500,rd.nextDouble() * 300 + 100,50,50);
 		goList.add(go);
 	}
 	
 	public void generatePlayer() {
-		player = new gameObject(ClassLoader.getSystemResource("blue.png").toString(), 20, 225, 50, 50);
+		player = new GameObject(ClassLoader.getSystemResource("blue.png").toString(), 20, 225, 50, 50);
 	}
 	
-	public boolean isCollide(gameObject o1, gameObject o2) {
+	public boolean isCollide(GameObject o1, GameObject o2) {
 		boolean isOverlapX = false, isOverlapY = false;
 		if(		o1.x 		>= o2.x && o1.x 		<= o2.x + o2.w)	isOverlapX = true;
 		if(o1.x + o1.w >= o2.x && o1.x + o1.w 	<= o2.x + o2.w) isOverlapX = true;
@@ -121,7 +121,7 @@ public class endlessRunTest extends Application {
 		return isOverlapX && isOverlapY;
 	}
 	
-	public boolean isDestroy(gameObject o) {
+	public boolean isDestroy(GameObject o) {
 		if(o.x < 0 - o.w)	return true;
 		return false;
 	}

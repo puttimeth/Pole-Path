@@ -8,9 +8,9 @@ import java.util.Random;
 
 import main.mainTest;
 
-public class bgHandler implements Renderable {
+public class BGHandler implements Renderable {
 	
-	public static final List<gameObject> bgEntities = new ArrayList<gameObject>();
+	public static final List<GameObject> bgEntities = new ArrayList<GameObject>();
 	
 	@Override
 	public void update() {
@@ -28,26 +28,26 @@ public class bgHandler implements Renderable {
 		}
 	}
 	
-	private boolean isDestroy(gameObject go) {
+	private boolean isDestroy(GameObject go) {
 		if(go.x < -go.w)	return true;
 		return false;
 	}
 	
-	private void move(gameObject go) {
+	private void move(GameObject go) {
 		go.x += SPEED;
 	}
 	
 	public void generateInitialBG() {
-		for(int i=0;i<2;i++) {
+		for(int i=0;i<50;i++) {
 			String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(4)+1)+".png").toString();
-			gameObject bg = new gameObject(url, i * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
+			GameObject bg = new GameObject(url, i * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
 			bgEntities.add(bg);
 		}
 	}
 	
 	public void generateBG() {
 		String url = ClassLoader.getSystemResource("bg"+(new Random().nextInt(4)+1)+".png").toString();
-		gameObject bg = new gameObject(url, 1 * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
+		GameObject bg = new GameObject(url, 49 * mainTest.SCREEN_WIDTH, 0, mainTest.SCREEN_WIDTH, mainTest.SCREEN_HEIGHT);
 		bgEntities.add(bg);
 	}
 	
